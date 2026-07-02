@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e5a50"/><stop offset="0.6" stop-color="#0a423b"/><stop offset="1" stop-color="#08322c"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c6a15b" stop-opacity="0"/><stop offset="0.5" stop-color="#c6a15b" stop-opacity="0.5"/><stop offset="1" stop-color="#c6a15b" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <rect y="300" width="1200" height="4" fill="url(#gold)"/>
+  <text x="80" y="300" fill="#ffffff" font-family="Pretendard, sans-serif" font-size="70" font-weight="800">방문 주소 확인</text>
+  <text x="80" y="370" fill="#cfe3de" font-family="Pretendard, sans-serif" font-size="34" font-weight="500">예약 전 제주 방문 주소·숙소명·동·호수 확인 방법을 안내합니다.</text>
+  <text x="80" y="560" fill="#c6a15b" font-family="Pretendard, sans-serif" font-size="30" font-weight="700">간다GO · 제주 출장마사지 지역 안내</text>
+</svg>

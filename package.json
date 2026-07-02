@@ -1,0 +1,11 @@
+{
+  "name": "gandago-jeju",
+  "version": "1.0.0",
+  "private": true,
+  "description": "간다GO · 제주도 출장마사지 생활권별 지역 안내 (정적 사이트)",
+  "scripts": {
+    "build": "node build.js",
+    "serve": "node build.js && npx --yes serve public"
+  },
+  "license": "UNLICENSED"
+}
