@@ -1,3 +1,11 @@
 User-agent: *
 Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
 Sitemap: https://trueease.netlify.app/sitemap.xml
+Sitemap: https://trueease.netlify.app/rss.xml

@@ -15,6 +15,10 @@ const SITE = {
   // 배포 도메인(canonical/sitemap 기준). 커스텀 도메인 연결 시 이 값만 교체하세요.
   origin: 'https://trueease.netlify.app',
 
+  // 검색엔진 소유확인
+  naverVerification: '9aec48a369c5a40eae1d1bb776f40f2fca1d71e4',
+  googleVerification: '', // Google Search Console 소유확인 메타값(있으면 입력)
+
   // 푸터 오렌지 버튼 링크 (텔레그램). 실제 계정으로 교체하세요.
   telegram: {
     build: 'https://t.me/gandago',   // 웹사이트 제작문의

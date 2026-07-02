@@ -166,6 +166,32 @@ function buildMain() {
     </div>
   </section>
 
+  <section class="section linkhub">
+    <div class="wrap">
+      <span class="eyebrow center" style="display:block">지역별 상세 안내</span>
+      <h2>제주 전 지역 출장마사지 지역 안내 바로가기</h2>
+      <p class="lead">제주공항·연동·노형부터 애월, 중문, 성산, 서귀포 도심까지 — 숙소가 위치한 지역을 골라 방문 가능 여부와 이용 기준을 확인하세요.</p>
+      <div class="grid grid-3">
+        <div class="linkcol">
+          <h3>제주시 지역 안내</h3>
+          <ul>${jejuSi.map((d) => `<li><a href="/jeju/jeju-si/${d.slug}/">${C.esc(d.name)} 출장마사지 지역 안내</a></li>`).join('')}</ul>
+        </div>
+        <div class="linkcol">
+          <h3>서귀포시 지역 안내</h3>
+          <ul>${seogwipoSi.map((d) => `<li><a href="/jeju/seogwipo-si/${d.slug}/">${C.esc(d.name)} 출장마사지 지역 안내</a></li>`).join('')}</ul>
+        </div>
+        <div class="linkcol">
+          <h3>생활권·이용 안내</h3>
+          <ul>
+            ${life.map((l) => `<li><a href="/jeju/life/${l.slug}/">${C.esc(l.name)} 숙소 생활권 안내</a></li>`).join('')}
+            <li><a href="/jeju/use/night/">제주 야간 출장마사지 예약 안내</a></li>
+            <li><a href="/jeju/use/outer-area/">제주 읍면 외곽 지역 이동 기준</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section section-alt">
     <div class="wrap wrap-narrow">
       <div class="article">
@@ -280,6 +306,8 @@ function buildDong(citySlug) {
     const lifeItem = life.find((l) => l.slug === item.lifeSlug);
     const lifeName = lifeItem ? lifeItem.name : item.name;
     const lifeUrl = `/jeju/life/${item.lifeSlug}/`;
+    const neighbors = list.filter((d) => d.lifeSlug === item.lifeSlug && d.slug !== item.slug)
+      .map((d) => ({ name: d.name, url: `/jeju/${citySlug}/${d.slug}/` }));
     const img = writeImg(`og-${citySlug}-${item.slug}.svg`, item.name, item.h1.replace(/^[^·]+·\s*/, ''));
     const noindex = item.slug === 'udo-myeon'; // 도항선 별도 기준 — 무리한 색인 지양
     const main = `
@@ -289,7 +317,7 @@ function buildDong(citySlug) {
       <p>${C.esc(item.lead)}</p>
     </div></section>
     <section class="section"><div class="wrap wrap-narrow">
-      ${C.regionArticle(item, { cityLabel, cityUrl, lifeName, lifeUrl, kind: 'dong' })}
+      ${C.regionArticle(item, { cityLabel, cityUrl, lifeName, lifeUrl, kind: 'dong', neighbors })}
     </div></section>`;
     const page = {
       title: `${item.h1}｜간다GO`, desc: item.desc, url, image: img,
@@ -372,19 +400,83 @@ function buildPolicy() {
   }
 }
 
-/* ---------------------------- sitemap/robots ------------------------- */
+/* ---------------------------- sitemap/rss/robots --------------------- */
+function priorityOf(u) {
+  if (u === '/') return { p: '1.0', f: 'daily' };
+  if (u === '/jeju/jeju-si/' || u === '/jeju/seogwipo-si/') return { p: '0.9', f: 'weekly' };
+  if (u.startsWith('/jeju/life/') || u.startsWith('/jeju/use/') || u.startsWith('/jeju/check/')) return { p: '0.8', f: 'weekly' };
+  if (/^\/jeju\/(jeju-si|seogwipo-si)\/[^/]+\/$/.test(u)) return { p: '0.7', f: 'weekly' };
+  return { p: '0.6', f: 'monthly' };
+}
+
 function buildSitemap() {
-  const body = urls
-    .filter((u) => u.endsWith('/'))
-    .map((u) => `  <url><loc>${SITE.origin}${u}</loc><lastmod>${SITE.editorial.updated}</lastmod></url>`)
-    .join('\n');
+  const pages = urls.filter((u) => u.endsWith('/'));
+  const lm = SITE.editorial.updated;
+
+  // sitemap.xml
+  const body = pages.map((u) => {
+    const { p, f } = priorityOf(u);
+    return `  <url><loc>${SITE.origin}${u}</loc><lastmod>${lm}</lastmod><changefreq>${f}</changefreq><priority>${p}</priority></url>`;
+  }).join('\n');
   fs.writeFileSync(path.join(OUT, 'sitemap.xml'),
-    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9">\n${body}\n</urlset>`
-      .replace('sitemap.org', 'sitemaps.org'));
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`);
+
+  // RSS 2.0 (네이버 서치어드바이저 RSS 제출용) — 주요 페이지 수록
+  const rssItems = [
+    { title: '제주도 출장마사지 · 생활권별 방문 가능 지역 안내', url: '/', desc: '제주 전 지역 생활권·이용 기준 안내' },
+    { title: '제주시 출장마사지 지역 안내', url: '/jeju/jeju-si/', desc: '제주시 공항·연동·노형 생활권 안내' },
+    { title: '서귀포 출장마사지 지역 안내', url: '/jeju/seogwipo-si/', desc: '서귀포 중문·성산 생활권 안내' },
+    ...life.map((l) => ({ title: `${l.name} 숙소 생활권 안내`, url: `/jeju/life/${l.slug}/`, desc: l.desc })),
+    ...jejuSi.map((d) => ({ title: `${d.name} 출장마사지 지역 안내`, url: `/jeju/jeju-si/${d.slug}/`, desc: d.desc })),
+    ...seogwipoSi.map((d) => ({ title: `${d.name} 출장마사지 지역 안내`, url: `/jeju/seogwipo-si/${d.slug}/`, desc: d.desc })),
+    ...use.map((u) => ({ title: u.h1, url: `/jeju/use/${u.slug}/`, desc: u.desc })),
+    ...check.map((c) => ({ title: c.h1, url: `/jeju/check/${c.slug}/`, desc: c.desc })),
+  ];
+  const pubDate = new Date(lm + 'T09:00:00+09:00').toUTCString();
+  const items = rssItems.map((it) => `    <item>
+      <title>${xml(it.title)}</title>
+      <link>${SITE.origin}${it.url}</link>
+      <guid isPermaLink="true">${SITE.origin}${it.url}</guid>
+      <description>${xml(it.desc)}</description>
+      <pubDate>${pubDate}</pubDate>
+    </item>`).join('\n');
+  fs.writeFileSync(path.join(OUT, 'rss.xml'),
+    `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>${xml(SITE.brand)} · 제주 출장마사지 지역 안내</title>
+    <link>${SITE.origin}/</link>
+    <atom:link href="${SITE.origin}/rss.xml" rel="self" type="application/rss+xml"/>
+    <description>제주도 출장마사지·홈타이 생활권별 방문 가능 지역 안내</description>
+    <language>ko-KR</language>
+    <lastBuildDate>${pubDate}</lastBuildDate>
+${items}
+  </channel>
+</rss>\n`);
+
+  // robots.txt — 모든 봇 허용 + 사이트맵/RSS 명시
   fs.writeFileSync(path.join(OUT, 'robots.txt'),
-    `User-agent: *\nAllow: /\nSitemap: ${SITE.origin}/sitemap.xml\n`);
+    `User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+Sitemap: ${SITE.origin}/sitemap.xml
+Sitemap: ${SITE.origin}/rss.xml
+`);
+
+  // 루트 파비콘 + Jekyll 비활성
+  const ico = path.join(__dirname, 'assets/favicon.ico');
+  if (fs.existsSync(ico)) fs.copyFileSync(ico, path.join(OUT, 'favicon.ico'));
   fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
 }
+
+const xml = (s = '') => String(s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 /* ------------------------------- run -------------------------------- */
 function run() {

@@ -61,9 +61,16 @@ function regionFaqs(name) {
 
 /* ------------------- 생활권/읍면동 상세 본문 ------------------------- */
 function regionArticle(item, opts) {
-  const { cityLabel, cityUrl, lifeName, lifeUrl, kind } = opts;
+  const { cityLabel, cityUrl, lifeName, lifeUrl, kind, neighbors } = opts;
   const nearby = item.nearby.map((n) => `<span class="tag">${esc(n)}</span>`).join('');
   const keywords = (item.keywords || []).map((k) => esc(k)).join(', ');
+  const neighborBlock = (neighbors && neighbors.length) ? `
+    <div class="related-areas">
+      <h3>같은 ${esc(lifeName)} 생활권 이웃 지역</h3>
+      <div class="tag-row">
+        ${neighbors.map((n) => `<a class="tag" href="${n.url}">${esc(n.name)} 출장마사지 지역 안내</a>`).join('')}
+      </div>
+    </div>` : '';
 
   return `
   <article class="article">
@@ -102,6 +109,7 @@ function regionArticle(item, opts) {
     ${opsBlock}
     ${faqHtml(regionFaqs(item.name))}
     ${whwBlock(item.name)}
+    ${neighborBlock}
 
     <p class="muted" style="margin-top:2rem;font-size:0.85rem">주요 키워드: ${keywords}</p>
   </article>`;

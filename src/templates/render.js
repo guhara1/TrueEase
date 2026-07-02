@@ -1,6 +1,7 @@
 'use strict';
 
 const { SITE, PRICING } = require('../config');
+const REV = require('../data/reviews');
 
 /* ------------------------------ helpers ------------------------------ */
 const esc = (s = '') => String(s)
@@ -24,6 +25,21 @@ function organizationSchema() {
     image: abs('/assets/img/og-default.svg'),
     sameAs: [SITE.telegram.reserve],
     description: '제주도 출장마사지·홈타이 생활권별 방문 가능 지역 안내',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: REV.average,
+      reviewCount: REV.count,
+      bestRating: REV.best,
+      worstRating: REV.worst,
+    },
+    review: REV.reviews.map((r) => ({
+      '@type': 'Review',
+      name: r.title,
+      datePublished: r.date,
+      reviewBody: r.body,
+      author: { '@type': 'Person', name: r.author },
+      reviewRating: { '@type': 'Rating', ratingValue: r.rating, bestRating: REV.best, worstRating: REV.worst },
+    })),
   };
 }
 
@@ -88,7 +104,11 @@ function head(page) {
 <title>${esc(page.title)}</title>
 <meta name="description" content="${esc(page.desc)}">
 <meta name="robots" content="${robots}">
+<meta name="format-detection" content="telephone=yes">
+${SITE.naverVerification ? `<meta name="naver-site-verification" content="${SITE.naverVerification}">` : ''}
+${SITE.googleVerification ? `<meta name="google-site-verification" content="${SITE.googleVerification}">` : ''}
 <link rel="canonical" href="${canonical}">
+<link rel="alternate" type="application/rss+xml" title="${esc(SITE.brand)} 지역 안내 RSS" href="/rss.xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(SITE.brand)}">
 <meta property="og:title" content="${esc(page.title)}">
@@ -99,6 +119,11 @@ function head(page) {
 <meta name="twitter:title" content="${esc(page.title)}">
 <meta name="twitter:description" content="${esc(page.desc)}">
 <meta name="twitter:image" content="${abs(page.image)}">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta name="theme-color" content="#0A423B">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="/assets/css/tokens.css">
 <link rel="stylesheet" href="/assets/css/components.css">
@@ -219,6 +244,43 @@ function footer() {
 </html>`;
 }
 
+/* ------------------------- 고객 후기 (전 페이지) --------------------- */
+const stars = (n) => '★★★★★☆☆☆☆☆'.slice(5 - n, 10 - n);
+
+function reviewsHtml() {
+  return `<section class="reviews" aria-labelledby="rev-h">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">고객 후기</span>
+      <h2 id="rev-h">실제 이용 후기</h2>
+      <div class="rev-summary">
+        <span class="rev-avg">${REV.average}</span>
+        <span class="rev-stars" aria-hidden="true">★★★★★</span>
+        <span class="rev-count">/ 5.0 · 후기 ${REV.count}개</span>
+      </div>
+    </div>
+    <div class="rev-grid">
+      ${REV.reviews.map((r) => `<figure class="rev-card">
+        <div class="rev-top"><span class="rev-stars" aria-label="별점 ${r.rating}점">${stars(r.rating)}</span><b class="rev-title">${esc(r.title)}</b></div>
+        <blockquote>${esc(r.body)}</blockquote>
+        <figcaption>— ${esc(r.author)} 고객</figcaption>
+      </figure>`).join('\n      ')}
+    </div>
+  </div>
+</section>`;
+}
+
+/* ------------------- 플로팅 전화 버튼 (전 페이지 고정) ---------------- */
+function fabCall() {
+  return `<a class="fab-call" href="${SITE.phoneHref}" aria-label="전화예약 ${SITE.phone}">
+  <span class="fab-ring"></span>
+  <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="currentColor">
+    <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.3 21 3 13.7 3 4.9 3 4.4 3.4 4 4 4h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.1 2.2z"/>
+  </svg>
+  <span class="fab-label">전화예약</span>
+</a>`;
+}
+
 /* ------------------------- layout composer --------------------------- */
 function layout(page, mainHtml) {
   return [
@@ -228,11 +290,13 @@ function layout(page, mainHtml) {
     `<main id="main">`,
     mainHtml,
     `</main>`,
+    reviewsHtml(),
     footer(),
+    fabCall(),
   ].join('\n');
 }
 
 module.exports = {
-  esc, abs, layout, header, footer, pricingHtml, breadcrumbHtml,
+  esc, abs, layout, header, footer, pricingHtml, breadcrumbHtml, reviewsHtml, fabCall,
   NAV,
 };

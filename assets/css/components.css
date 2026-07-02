@@ -240,10 +240,83 @@ a.card:hover { text-decoration: none; transform: translateY(-3px); box-shadow: v
 }
 .footer-disclaimer { max-width: 68ch; line-height: 1.6; }
 
+/* =====================================================================
+   고객 후기 (전 페이지)
+   ===================================================================== */
+.reviews { background: var(--c-surface-alt); padding-block: var(--gap-xl); }
+.reviews .head { text-align: center; margin-bottom: 2rem; }
+.rev-summary { display: inline-flex; align-items: baseline; gap: 0.5rem; margin-top: 0.4rem; }
+.rev-avg { font-size: 2.2rem; font-weight: 800; color: var(--c-ink); }
+.rev-summary .rev-stars { color: var(--c-gold); font-size: 1.1rem; letter-spacing: 2px; }
+.rev-count { color: var(--c-muted); font-size: var(--fs-sm); }
+.rev-grid { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.rev-card {
+  margin: 0; background: var(--c-surface); border: 1px solid var(--c-line);
+  border-radius: var(--radius); padding: 1.3rem; box-shadow: var(--shadow-sm);
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.rev-top { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.rev-card .rev-stars { color: var(--c-gold); letter-spacing: 1px; }
+.rev-title { color: var(--c-ink); font-size: var(--fs-sm); }
+.rev-card blockquote { margin: 0; color: var(--c-ink-soft); font-size: var(--fs-sm); line-height: 1.7; }
+.rev-card figcaption { color: var(--c-muted); font-size: var(--fs-xs); }
+
+/* =====================================================================
+   롱테일 내부링크 클러스터
+   ===================================================================== */
+.linkhub { padding-block: var(--gap-xl); }
+.linkhub h2 { text-align: center; }
+.linkhub .lead { text-align: center; max-width: 60ch; margin: 0 auto 2rem; }
+.linkcol h3 { color: var(--c-primary-ink); font-size: 1rem; margin-bottom: 0.7rem; }
+.linkcol ul { list-style: none; margin: 0 0 1.4rem; padding: 0; display: grid; gap: 0.4rem; }
+.linkcol a { color: var(--c-ink-soft); font-size: var(--fs-sm); }
+.linkcol a:hover { color: var(--c-primary-ink); }
+.related-areas { margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px solid var(--c-line); }
+.related-areas h3 { font-size: 1rem; }
+.related-areas .tag-row a { text-decoration: none; }
+.related-areas .tag:hover { background: var(--c-primary); color: #fff; }
+
+/* =====================================================================
+   플로팅 전화 버튼 (전 페이지 고정 · 오렌지 · 애니메이션)
+   ===================================================================== */
+.fab-call {
+  position: fixed; right: 18px; bottom: 18px; z-index: 150;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0 18px 0 0; height: 58px; border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, var(--c-orange), var(--c-orange-strong));
+  color: #fff; box-shadow: var(--shadow-orange);
+  animation: fab-bob 1.6s ease-in-out infinite;
+}
+.fab-call:hover { text-decoration: none; color: #fff; filter: brightness(1.05); }
+.fab-call svg { margin: 0 0 0 16px; animation: fab-wiggle 1.2s ease-in-out infinite; }
+.fab-label { font-weight: 800; font-size: 0.95rem; padding-right: 2px; }
+.fab-ring {
+  position: absolute; left: 6px; top: 50%; width: 46px; height: 46px;
+  transform: translateY(-50%); border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.55);
+  animation: fab-pulse 1.8s ease-out infinite; pointer-events: none;
+}
+@keyframes fab-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes fab-wiggle { 0%,100% { transform: rotate(0); } 20% { transform: rotate(-18deg); } 40% { transform: rotate(16deg); } 60% { transform: rotate(-10deg); } 80% { transform: rotate(6deg); } }
+@keyframes fab-pulse { 0% { box-shadow: 0 0 0 0 rgba(249,115,22,0.55); } 70% { box-shadow: 0 0 0 18px rgba(249,115,22,0); } 100% { box-shadow: 0 0 0 0 rgba(249,115,22,0); } }
+
+/* 데스크톱에선 라벨 유지, 아주 좁은 화면에선 아이콘만 */
+@media (max-width: 400px) {
+  .fab-call { padding-right: 14px; height: 54px; }
+  .fab-label { display: none; }
+  .fab-call svg { margin-right: 14px; }
+}
+
 /* ---- 반응형 -------------------------------------------------------- */
+.brand { white-space: nowrap; }
 @media (max-width: 860px) {
   .nav { display: none; }
   .footer-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .brand small { display: none; }
+  .site-header .wrap { gap: 0.6rem; min-height: 58px; }
+  .header-phone { font-size: 0.82rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
