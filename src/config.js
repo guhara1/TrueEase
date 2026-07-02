@@ -12,8 +12,8 @@ const SITE = {
   phone: '0508-202-4723',
   phoneHref: 'tel:05082024723',
 
-  // 배포 도메인(canonical/sitemap 기준). 실제 도메인으로 교체하세요.
-  origin: 'https://gandago.co.kr',
+  // 배포 도메인(canonical/sitemap 기준). 커스텀 도메인 연결 시 이 값만 교체하세요.
+  origin: 'https://trueease.netlify.app',
 
   // 푸터 오렌지 버튼 링크 (텔레그램). 실제 계정으로 교체하세요.
   telegram: {
