@@ -97,7 +97,7 @@ function buildMain() {
         </div>
       </div>
       <div class="hero-media">
-        <img src="${SITE.heroImage}" alt="${C.esc(SITE.heroImageAlt)}" width="720" height="560" loading="eager">
+        <img src="${SITE.heroImage}" alt="${C.esc(SITE.heroImageAlt)}" width="1100" height="619" loading="eager">
       </div>
     </div>
   </section>

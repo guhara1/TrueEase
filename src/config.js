@@ -24,7 +24,7 @@ const SITE = {
 
   // 메인 히어로 우측 이미지.
   // assets/img/ 에 파일을 올리고 경로만 바꾸면 됩니다. (jpg/png/webp/svg 모두 가능)
-  heroImage: '/assets/img/hero-main.svg',
+  heroImage: '/assets/img/hero-main.webp',
   heroImageAlt: '제주 바다와 한라산을 배경으로 한 숙소 지역 안내 이미지',
 
   // 저자/검수 (E-E-A-T 신호)
