@@ -72,7 +72,7 @@ p  { margin: 0 0 1em; }
 /* ---- 헤더 ----------------------------------------------------------- */
 .site-header {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(251, 250, 247, 0.86); backdrop-filter: saturate(150%) blur(10px);
+  background: rgba(11, 13, 16, 0.82); backdrop-filter: saturate(150%) blur(12px);
   border-bottom: 1px solid var(--c-line);
 }
 .site-header .wrap { display: flex; align-items: center; gap: var(--gap); min-height: 66px; }
@@ -100,6 +100,22 @@ p  { margin: 0 0 1em; }
 .hero h1 { font-size: var(--fs-hero); color: #fff; max-width: 20ch; }
 .hero p { color: rgba(255,255,255,0.86); max-width: 62ch; font-size: 1.05rem; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.6rem; }
+
+/* 2단 히어로 (우측 이미지) */
+.hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+.hero-media { position: relative; }
+.hero-media img {
+  width: 100%; height: auto; border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg); border: 1px solid rgba(255,255,255,0.14);
+}
+.hero-media::before {
+  content: ""; position: absolute; inset: -14px -14px auto auto; width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(217,183,106,0.35), transparent 70%); z-index: -1;
+}
+@media (max-width: 820px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-media { order: -1; max-width: 460px; }
+}
 
 /* ---- Breadcrumb ---------------------------------------------------- */
 .crumbs { font-size: var(--fs-xs); color: var(--c-muted); padding-block: 0.9rem; }

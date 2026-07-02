@@ -55,11 +55,19 @@ function writeImg(name, title, sub) {
   fs.writeFileSync(p, svg(title, sub));
   return `/assets/img/${name}`;
 }
+function copyDir(srcDir, dstDir) {
+  if (!fs.existsSync(srcDir)) return;
+  fs.mkdirSync(dstDir, { recursive: true });
+  for (const f of fs.readdirSync(srcDir)) {
+    const s = path.join(srcDir, f);
+    const d = path.join(dstDir, f);
+    if (fs.statSync(s).isDirectory()) copyDir(s, d);
+    else fs.copyFileSync(s, d);
+  }
+}
 function copyAssets() {
-  const src = path.join(__dirname, 'assets/css');
-  const dst = path.join(OUT, 'assets/css');
-  fs.mkdirSync(dst, { recursive: true });
-  for (const f of fs.readdirSync(src)) fs.copyFileSync(path.join(src, f), path.join(dst, f));
+  // 소스 assets/(css·img 등)를 그대로 복사. 사용자가 올린 실제 이미지도 함께 배포됩니다.
+  copyDir(path.join(__dirname, 'assets'), path.join(OUT, 'assets'));
 }
 
 /* ------------------------------ 메인 -------------------------------- */
@@ -75,16 +83,21 @@ function buildMain() {
   ).join('\n      ');
 
   const main = `
-  <section class="hero">
-    <div class="wrap">
-      <span class="eyebrow">제주도 출장마사지 · 홈타이</span>
-      <h1>제주도 출장마사지 · 생활권별 방문 가능 지역 안내</h1>
-      <p>제주시, 서귀포, 제주공항, 연동, 노형, 애월, 중문, 성산, 함덕, 협재 등 주요 생활권과 호텔·리조트·펜션·자택 이용 전 확인사항을 안내합니다.</p>
-      <div class="hero-cta">
-        <a class="btn btn-orange" href="/jeju/jeju-si/">제주시 보기</a>
-        <a class="btn btn-outline-light" href="/jeju/seogwipo-si/">서귀포시 보기</a>
-        <a class="btn btn-outline-light" href="/jeju/life/">생활권 보기</a>
-        <a class="btn btn-outline-light" href="/jeju/check/">예약 전 확인</a>
+  <section class="hero hero-split">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">제주도 출장마사지 · 홈타이</span>
+        <h1>제주도 출장마사지 · 생활권별 방문 가능 지역 안내</h1>
+        <p>제주시, 서귀포, 제주공항, 연동, 노형, 애월, 중문, 성산, 함덕, 협재 등 주요 생활권과 호텔·리조트·펜션·자택 이용 전 확인사항을 안내합니다.</p>
+        <div class="hero-cta">
+          <a class="btn btn-orange" href="/jeju/jeju-si/">제주시 보기</a>
+          <a class="btn btn-outline-light" href="/jeju/seogwipo-si/">서귀포시 보기</a>
+          <a class="btn btn-outline-light" href="/jeju/life/">생활권 보기</a>
+          <a class="btn btn-outline-light" href="/jeju/check/">예약 전 확인</a>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img src="${SITE.heroImage}" alt="${C.esc(SITE.heroImageAlt)}" width="720" height="560" loading="eager">
       </div>
     </div>
   </section>

@@ -12,34 +12,35 @@
 }
 
 :root {
-  /* ---- 프리미엄 팔레트 ---------------------------------------------- */
-  /* 딥 잉크 + 웜 아이보리 + 제이드 + 골드 + 오렌지 CTA */
-  --c-bg:            #0F1216;   /* 딥 잉크 (다크 섹션/가격표 기본) */
-  --c-bg-soft:       #151A20;
-  --c-page:          #FBFAF7;   /* 웜 아이보리 (본문 페이지 기본) */
-  --c-surface:       #FFFFFF;
-  --c-surface-alt:   #F4F1EA;
-  --c-surface-dark:  #1A2028;
-  --c-surface-dark2: #212934;
+  /* ---- 프리미엄 팔레트 (다크 테마) --------------------------------- */
+  /* 블랙 계열 배경 + 밝은 텍스트 · 고대비 가독성 우선 */
+  --c-bg:            #0B0D10;   /* 최심층 배경 (푸터/가격표) */
+  --c-bg-soft:       #0E1116;
+  --c-page:          #0E1013;   /* 페이지 기본 배경 (블랙 계열) */
+  --c-surface:       #171B21;   /* 카드/아티클 표면 */
+  --c-surface-2:     #1E242C;   /* 한 단계 밝은 표면 */
+  --c-surface-alt:   #101318;   /* 교차 섹션 배경 */
+  --c-surface-dark:  #171B21;   /* 가격표 카드 */
+  --c-surface-dark2: #20272F;
 
-  --c-ink:           #14171C;   /* 본문 텍스트 */
-  --c-ink-soft:      #3B424C;
-  --c-muted:         #6B7280;
-  --c-muted-dark:    #9CA6B2;   /* 다크 배경 위 보조 텍스트 */
-  --c-line:          #E7E2D8;
-  --c-line-dark:     #2B333E;
+  --c-ink:           #EEF1F4;   /* 본문 텍스트 (밝은 계열) */
+  --c-ink-soft:      #C4CCD4;   /* 보조 본문 */
+  --c-muted:         #93A0AD;   /* 뮤트 (다크 위 최소 대비 확보) */
+  --c-muted-dark:    #9CA6B2;
+  --c-line:          #29313B;   /* 경계선 */
+  --c-line-dark:     #232A33;
 
-  --c-primary:       #0E5A50;   /* 딥 제이드 (제주 바다/자연) */
-  --c-primary-strong:#0A423B;
-  --c-primary-soft:  #E6F0ED;
-  --c-primary-ink:   #0B4A42;
+  --c-primary:       #16B39C;   /* 제이드 (다크 위에서 밝게) */
+  --c-primary-strong:#0E8C7B;
+  --c-primary-soft:  #10352F;   /* 칩/배경용 딥 제이드 */
+  --c-primary-ink:   #3FD6BF;   /* 링크/액센트 텍스트 (밝은 제이드) */
 
-  --c-gold:          #C6A15B;   /* 프리미엄 골드 액센트 */
-  --c-gold-soft:     #F3ECDD;
+  --c-gold:          #D9B76A;   /* 프리미엄 골드 액센트 */
+  --c-gold-soft:     #2A2416;
 
   --c-orange:        #F97316;   /* CTA (제작문의/제휴문의/예약) */
   --c-orange-strong: #EA580C;
-  --c-orange-soft:   #FFF1E6;
+  --c-orange-soft:   #2A1B0E;
 
   --c-white:         #FFFFFF;
 
@@ -74,9 +75,9 @@
   --wrap-narrow: 820px;
 
   /* ---- 그림자/오버레이 --------------------------------------------- */
-  --shadow-sm: 0 1px 2px rgba(20, 23, 28, 0.06), 0 2px 8px rgba(20, 23, 28, 0.05);
-  --shadow:    0 6px 24px rgba(20, 23, 28, 0.08), 0 2px 6px rgba(20, 23, 28, 0.05);
-  --shadow-lg: 0 18px 48px rgba(20, 23, 28, 0.16);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.28);
+  --shadow:    0 8px 28px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 22px 55px rgba(0, 0, 0, 0.55);
   --shadow-orange: 0 10px 28px rgba(249, 115, 22, 0.35);
 
   --overlay-jade: linear-gradient(135deg, rgba(14, 90, 80, 0.92), rgba(10, 66, 59, 0.86));
