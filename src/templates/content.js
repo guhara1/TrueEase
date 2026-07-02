@@ -74,7 +74,7 @@ function regionArticle(item, opts) {
     <h2>상위 행정구역 · ${esc(cityLabel)}</h2>
     <p>${esc(item.name)}은(는) <a href="${cityUrl}">${esc(cityLabel)} 출장마사지 지역 안내</a>에 속하며,
     ${esc(cityLabel)}는 제주도 전체 이용 기준의 두 축 가운데 하나입니다. 제주도 전체 생활권 구성은
-    <a href="/jeju/">제주도 출장마사지 생활권 안내</a> 메인에서 한눈에 확인할 수 있습니다.</p>
+    <a href="/">제주도 출장마사지 생활권 안내</a> 메인에서 한눈에 확인할 수 있습니다.</p>
 
     <h2>${esc(lifeName)} 생활권 설명</h2>
     <p>${esc(item.name)}은(는) <a href="${lifeUrl}">${esc(lifeName)} 숙소 생활권 안내</a>에 포함됩니다.
@@ -121,7 +121,7 @@ function cityArticle(cityLabel, cityUrl, lifeList, dongList) {
     <h2>${esc(cityLabel)} 생활권 안내</h2>
     <p>${esc(cityLabel)}는 제주도 출장마사지 이용 기준의 두 축 가운데 하나입니다. 공항 인접 숙소, 도심 호텔·오피스텔,
     해변 펜션, 읍면 외곽 이동 기준이 지역마다 달라, 아래 생활권별로 확인 내용을 나눠 정리했습니다.
-    제주도 전체 안내는 <a href="/jeju/">제주도 출장마사지 생활권 안내</a>에서 확인할 수 있습니다.</p>
+    제주도 전체 안내는 <a href="/">제주도 출장마사지 생활권 안내</a>에서 확인할 수 있습니다.</p>
   </article>
 
   <section class="section">
@@ -164,7 +164,7 @@ function lifeArticle(item, opts) {
 
     <h2>상위 행정구역 · ${esc(cityLabel)}</h2>
     <p>${esc(item.name)} 생활권은 <a href="${cityUrl}">${esc(cityLabel)} 출장마사지 지역 안내</a>에 속합니다.
-    제주도 전체 생활권 구성은 <a href="/jeju/">제주도 출장마사지 생활권 안내</a> 메인에서 확인할 수 있습니다.</p>
+    제주도 전체 생활권 구성은 <a href="/">제주도 출장마사지 생활권 안내</a> 메인에서 확인할 수 있습니다.</p>
 
     <h2>가까운 공항·항만·인접 지역</h2>
     <p>${esc(item.transport)} 대표 인접 지역으로는 ${esc(item.nearby.join(', '))} 등이 있습니다.</p>

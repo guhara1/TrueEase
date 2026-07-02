@@ -8,10 +8,16 @@
 [build.environment]
   NODE_VERSION = "20"
 
-# 루트 접속을 제주 메인으로 연결
+# 구 홈 경로(/jeju/)를 루트로 연결 (홈은 이제 / 입니다)
 [[redirects]]
-  from = "/"
-  to = "/jeju/"
+  from = "/jeju"
+  to = "/"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/jeju/"
+  to = "/"
   status = 301
   force = false
 

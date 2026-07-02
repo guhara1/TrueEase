@@ -110,7 +110,7 @@ ${schemas.map(jsonld).join('\n')}
 
 /* ----------------------------- header -------------------------------- */
 const NAV = [
-  ['/jeju/', '제주 홈'],
+  ['/', '제주 홈'],
   ['/jeju/jeju-si/', '제주시'],
   ['/jeju/seogwipo-si/', '서귀포시'],
   ['/jeju/life/', '생활권'],
@@ -122,7 +122,7 @@ const NAV = [
 function header() {
   return `<header class="site-header">
   <div class="wrap">
-    <a class="brand" href="/jeju/">간다<span class="go">GO</span> <small>제주 출장마사지 지역 안내</small></a>
+    <a class="brand" href="/">간다<span class="go">GO</span> <small>제주 출장마사지 지역 안내</small></a>
     <nav class="nav" aria-label="주요 메뉴">
       ${NAV.map(([h, t]) => `<a href="${h}">${t}</a>`).join('\n      ')}
     </nav>
@@ -182,7 +182,7 @@ function footer() {
 
     <div class="footer-grid">
       <div class="footer-brand">
-        <a class="brand" href="/jeju/">간다<span class="go">GO</span></a>
+        <a class="brand" href="/">간다<span class="go">GO</span></a>
         <p class="biz-line">상호 <b>${esc(SITE.brand)}</b></p>
         <p class="biz-line">전화예약 <b><a href="${SITE.phoneHref}" style="color:#fff">${esc(SITE.phone)}</a></b></p>
         <p>제주도 출장마사지·홈타이 생활권별 방문 가능 지역 안내</p>

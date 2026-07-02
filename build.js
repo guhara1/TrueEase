@@ -17,7 +17,7 @@ const { use, check, policy } = require('./src/data/pages');
 
 const OUT = path.join(__dirname, 'public');
 const CITY_LABEL = { 'jeju-si': '제주시', 'seogwipo-si': '서귀포시' };
-const HOME = { name: '제주 홈', url: '/jeju/' };
+const HOME = { name: '제주 홈', url: '/' };
 
 /* --------------------------- fs helpers ------------------------------ */
 function write(urlPath, html) {
@@ -179,17 +179,10 @@ function buildMain() {
   const page = {
     title: '제주도 출장마사지｜제주시·서귀포·애월·중문·성산 홈타이 지역 안내',
     desc: '제주도 출장마사지·홈타이 제주시·서귀포·애월·중문·성산 생활권과 이용 기준 안내',
-    url: '/jeju/', image: img, imageAlt: '제주도 출장마사지 생활권 안내 이미지',
+    url: '/', image: img, imageAlt: '제주도 출장마사지 생활권 안내 이미지',
     crumbs: [HOME], faqs: C.regionFaqs('제주도'),
   };
-  write('/jeju/', R.layout(page, main));
-
-  // 루트 리다이렉트
-  write('/index.html', `<!doctype html><html lang="ko"><head><meta charset="utf-8">
-<title>간다GO · 제주도 출장마사지 지역 안내</title>
-<link rel="canonical" href="${SITE.origin}/jeju/">
-<meta http-equiv="refresh" content="0; url=/jeju/"></head>
-<body><p><a href="/jeju/">제주도 출장마사지 지역 안내로 이동</a></p></body></html>`);
+  write('/', R.layout(page, main));
 }
 
 /* ------------------------------ 도시 -------------------------------- */
